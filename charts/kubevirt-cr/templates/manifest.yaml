@@ -40,12 +40,12 @@ spec:
                   - key: workload
                     operator: In
                     values:
-                      - platform
+                      - vm
       nodeSelector:
-        workload: platform
+        workload: vm
       tolerations:
         - key: workload
           operator: Equal
-          value: platform
+          value: vm
           effect: NoSchedule
   workloadUpdateStrategy: {}
