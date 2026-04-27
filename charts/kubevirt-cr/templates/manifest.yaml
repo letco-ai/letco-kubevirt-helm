@@ -10,6 +10,24 @@ spec:
     developerConfiguration:
       featureGates: []
     imagePullPolicy: IfNotPresent
+  infra:
+    nodePlacement:
+      nodeSelector:
+        workload: platform
+      tolerations:
+        - key: workload
+          operator: Equal
+          value: platform
+          effect: NoSchedule
   customizeComponents: {}
   imagePullPolicy: IfNotPresent
+  workloads:
+    nodePlacement:
+      nodeSelector:
+        workload: platform
+      tolerations:
+        - key: workload
+          operator: Equal
+          value: platform
+          effect: NoSchedule
   workloadUpdateStrategy: {}
