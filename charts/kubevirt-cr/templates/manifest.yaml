@@ -12,6 +12,15 @@ spec:
     imagePullPolicy: IfNotPresent
   infra:
     nodePlacement:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - platform
       nodeSelector:
         workload: platform
       tolerations:
@@ -23,6 +32,15 @@ spec:
   imagePullPolicy: IfNotPresent
   workloads:
     nodePlacement:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - platform
       nodeSelector:
         workload: platform
       tolerations:
