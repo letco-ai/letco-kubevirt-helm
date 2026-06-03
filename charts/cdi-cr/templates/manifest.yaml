@@ -8,9 +8,26 @@ spec:
     - HonorWaitForFirstConsumer
     - WebhookPvcRendering
   imagePullPolicy: IfNotPresent
+  # Node placement mirrors kubevirt-cr: CDI control-plane (apiserver/controller/
+  # uploadproxy) on `platform` nodes; per-import workload pods (importer/uploader/
+  # cloner) on `vm` nodes so they land where the gp3 PVC binds (WaitForFirstConsumer).
+  # letco-prod-sandbox nodes are tainted workload=platform / workload=vm:NoSchedule.
+  # NOTE: bin/build-cdi-charts overwrites this block — re-apply after a version bump.
   infra:
     nodeSelector:
       kubernetes.io/os: linux
+      workload: platform
+    tolerations:
+    - key: workload
+      operator: Equal
+      value: platform
+      effect: NoSchedule
   workload:
     nodeSelector:
       kubernetes.io/os: linux
+      workload: vm
+    tolerations:
+    - key: workload
+      operator: Equal
+      value: vm
+      effect: NoSchedule
